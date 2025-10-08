@@ -1,162 +1,114 @@
-# 🏥 Smart Disease Diagnosis System
-# Plant-Expert-System-Fuzzy-Logic-and-forward-backward-chain-
-An AI-powered disease prediction system using Machine Learning to predict **Diabetes**, **Heart Disease**, and **Liver Disease** based on patient medical data.
+# 🌿 Plant Expert System
 
-## 📋 Features
+The **Plant Expert System** is a web-based application designed to help users diagnose plant diseases and pest problems based on visible symptoms. Using an expert system approach, it provides possible causes and recommendations for treatment.
 
-- **Three Disease Prediction Models:**
-  - Diabetes Prediction (Pima Indians Dataset)
-  - Heart Disease Prediction (UCI Heart Disease Dataset)
-  - Liver Disease Prediction (Indian Liver Patient Records)
+---
 
-- **Machine Learning:**
-  - Random Forest Classifier for all models
-  - Feature scaling with StandardScaler
-  - Model persistence with joblib
+## 🚀 Features
 
-- **Interactive GUI:**
-  - Built with Streamlit
-  - User-friendly interface
-  - Real-time predictions
-  - Confidence scores
-  - Input validation
+* Interactive **plant disease and pest diagnosis**.
+* Database of **symptoms, pests, and diseases**.
+* **Rule-based expert system** for intelligent analysis.
+* Simple, intuitive **web interface**.
+* **MySQL** backend for data storage and management.
+* Modular **PHP API** for extensibility.
 
-## 🚀 Quick Start
+---
 
-### 1. Install Dependencies
+## 🛠️ Tech Stack
 
-\`\`\`bash
-pip install -r requirements.txt
-\`\`\`
+| Layer    | Technologies Used                    |
+| -------- | ------------------------------------ |
+| Frontend | HTML, CSS, JavaScript                |
+| Backend  | PHP (Procedural + Class-based logic) |
+| Database | MySQL                                |
+| Server   | Apache / XAMPP / LAMP Stack          |
 
-### 2. Train the Models
+---
 
-Run the training script to create and save all three ML models:
+## 📂 Project Structure
 
-\`\`\`bash
-python scripts/train_models.py
-\`\`\`
+```
+plant_expert_system/
+├── api/               # PHP API endpoints
+├── classes/           # Expert system core logic (ExpertSystem.php)
+├── config/            # Database connection configuration
+├── css/               # Frontend styling
+├── database/          # SQL dump (sikar.sql)
+├── img/               # Plant, pest, and disease images
+├── index.html         # Main UI
+└── package.json       # Project metadata (optional)
+```
 
-This will:
-- Download datasets from provided URLs
-- Train three Random Forest models
-- Save models as `.pkl` files in the `models/` directory
-- Display accuracy metrics for each model
+---
 
-Expected output:
-\`\`\`
-Training Diabetes Prediction Model
-Model Accuracy: 0.75-0.80
+## ⚙️ Installation and Setup
 
-Training Heart Disease Prediction Model
-Model Accuracy: 0.80-0.85
+### Prerequisites
 
-Training Liver Disease Prediction Model
-Model Accuracy: 0.70-0.75
-\`\`\`
+* PHP 8.x or later
+* MySQL 5.7+ or MariaDB
+* Apache server (e.g., XAMPP or LAMP)
 
-### 3. Run the Application
+### Steps
 
-Launch the Streamlit GUI:
+1. **Clone this repository**
 
-\`\`\`bash
-streamlit run app.py
-\`\`\`
+   ```bash
+   git clone https://github.com/YourUsername/plant_expert_system.git
+   ```
 
-The app will open in your browser at `http://localhost:8501`
+2. **Move project to server directory**
 
-## 📊 How to Use
+   ```
+   C:\xampp\htdocs\plant_expert_system
+   ```
 
-1. **Select Disease Type** from the sidebar
-2. **Enter Patient Information** in the input fields
-3. **Click "Predict"** to get the diagnosis
-4. **View Results** with confidence scores
+3. **Import the database**
 
-### Input Parameters
+   * Open `phpMyAdmin`
+   * Create a new database named `sikar`
+   * Import the file `database/sikar.sql`
 
-#### Diabetes Prediction
-- Pregnancies, Glucose, Blood Pressure, Skin Thickness
-- Insulin, BMI, Diabetes Pedigree Function, Age
+4. **Configure database connection**
 
-#### Heart Disease Prediction
-- Age, Sex, Chest Pain Type, Resting Blood Pressure
-- Cholesterol, Fasting Blood Sugar, Resting ECG
-- Max Heart Rate, Exercise Induced Angina, ST Depression
-- Slope, Number of Major Vessels, Thalassemia
+   * Edit `config/database.php`
+   * Update with your MySQL credentials:
 
-#### Liver Disease Prediction
-- Age, Gender, Total Bilirubin, Direct Bilirubin
-- Alkaline Phosphotase, Alamine Aminotransferase
-- Aspartate Aminotransferase, Total Proteins
-- Albumin, Albumin and Globulin Ratio
+     ```php
+     $this->conn = new mysqli("localhost", "root", "", "sikar");
+     ```
 
-## 📁 Project Structure
+5. **Run the application**
 
-\`\`\`
-SmartDiseaseDiagnosis/
-│
-├── models/                      # Saved ML models (generated after training)
-│   ├── diabetes_model.pkl
-│   ├── diabetes_scaler.pkl
-│   ├── heart_model.pkl
-│   ├── heart_scaler.pkl
-│   ├── liver_model.pkl
-│   └── liver_scaler.pkl
-│
-├── scripts/
-│   └── train_models.py         # Model training script
-│
-├── app.py                      # Main Streamlit application
-├── requirements.txt            # Python dependencies
-└── README.md                   # This file
-\`\`\`
+   * Start Apache and MySQL in XAMPP
+   * Visit [http://localhost/plant_expert_system](http://localhost/plant_expert_system)
 
-## 🔬 Model Details
+---
 
-### Algorithms Used
-- **Random Forest Classifier** with 100 estimators
-- **StandardScaler** for feature normalization
-- **80-20 Train-Test Split** with stratification
+## 🧠 How It Works
 
-### Datasets
-- **Diabetes:** Pima Indians Diabetes Database
-- **Heart Disease:** UCI Heart Disease Dataset
-- **Liver Disease:** Indian Liver Patient Records
+1. The user selects **symptoms** observed on their plant.
+2. The expert system uses a **rule-based inference engine** (defined in `ExpertSystem.php`) to analyze data.
+3. It matches symptoms against known rules in the database.
+4. The system returns **possible diseases or pests** and suggested treatments.
 
-### Performance Metrics
-Each model displays:
-- Accuracy Score
-- Classification Report (Precision, Recall, F1-Score)
-- Confusion Matrix
+-----
 
-## ⚠️ Important Notes
+## 💡 Future Improvements
 
-- **Medical Disclaimer:** This system is for educational purposes only. Always consult qualified healthcare professionals for medical diagnosis and treatment.
-- **Data Privacy:** Do not use real patient data without proper authorization and compliance with healthcare regulations (HIPAA, GDPR, etc.)
-- **Model Limitations:** Predictions are based on historical data and may not account for all medical factors
+* Add AI or machine learning for better accuracy.
+* Include plant image recognition.
+* Multi-language support.
+* Mobile-friendly responsive design.
 
-## 🛠️ Technologies Used
+---
+## 🪴 License
 
-- **Python 3.8+**
-- **Streamlit** - Web application framework
-- **scikit-learn** - Machine learning library
-- **pandas** - Data manipulation
-- **numpy** - Numerical computing
-- **joblib** - Model serialization
+This project is licensed under the **MIT License** — feel free to modify and use it for your own research or learning.
 
-## 📈 Future Enhancements
+---
 
-- Add more disease prediction models
-- Implement deep learning models
-- Add data visualization and analytics
-- Export prediction reports as PDF
-- User authentication and history tracking
-- Integration with medical databases
+## ⭐ Acknowledgment
 
-## 📝 License
-
-This project is for educational purposes only.
-
-## 👨‍💻 Support
-
-For issues or questions, please consult the documentation or seek help from qualified healthcare and ML professionals.
+Special thanks to all open-source contributors and agricultural data references used in building this expert system.
