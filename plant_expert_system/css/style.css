@@ -1,0 +1,651 @@
+/* ==================================== */
+/* 1. GLOBAL RESET & BASE STYLES        */
+/* ==================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #567d46; /* Hijau Tua (Header, Footer) */
+    --color-secondary: #7ed957; /* Hijau Muda/Aksen */
+    --color-background: #f8f8f8;
+    --color-card-bg: #ffffff;
+    --color-text: #333;
+    --color-danger: #e74c3c;
+    --color-success: #2ecc71;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+h2, h3, h4 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.hidden {
+    /* Solusi untuk masalah pop-up: memastikan elemen benar-benar disembunyikan */
+    display: none !important;
+}
+
+/* ==================================== */
+/* 2. HEADER & NAVIGATION               */
+/* ==================================== */
+.header {
+    background: var(--color-primary); /* hijau tua */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.logo-icon {
+    width: 80px;       /* bisa kamu sesuaikan */
+    height: auto;      /* biar proporsional */
+    margin-right: 10px;
+    border-radius: 0;  /* Hapus lingkaran */
+    overflow: visible; /* Jangan potong gambar */
+}
+
+.logo-img {
+    width: 100%;
+    height: auto;      /* biar tidak gepeng */
+    object-fit: contain;
+}
+
+
+.nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 10px 15px;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s, background-color 0.3s;
+    border-radius: 6px;
+}
+
+.nav-btn:hover {
+    color: var(--color-secondary);
+}
+
+.nav-btn.active {
+    background-color: white;
+    color: black;
+}
+
+/* ==================================== */
+/* 3. MAIN CONTENT & TABS               */
+/* ==================================== */
+.main {
+    padding: 20px 0;
+}
+
+.tab-content {
+    padding: 30px;
+    background: var(--color-card-bg);
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.tab-content:not(.active) {
+    display: none;
+}
+
+/* ==================================== */
+/* 4. DIAGNOSIS TAB (Symptom Selection) */
+/* ==================================== */
+.diagnosis-container {
+    padding: 0 20px;
+}
+
+.diagnosis-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.diagnosis-header p {
+    color: #666;
+    max-width: 700px;
+    margin: 10px auto 0;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#symptoms-search {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.search-icon {
+    padding: 10px 15px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ------------------------------------------- */
+/* A. Styling untuk Kotak Gejala (Symptom Card) */
+/* ------------------------------------------- */
+.symptom-card {
+    /* MENGUBAH WARNA LATAR BELAKANG MENJADI PUTIH SOLID */
+    background-color: #ffffff; /* Putih Solid */
+    
+    /* Mengatur padding dan radius */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; /* Border abu-abu tipis agar kotak terlihat */
+    
+    /* Box Shadow (Opsional, untuk efek 'angkat') */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    /* Agar button (jika sudah diubah) tidak terlihat seperti link */
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    width: 100%; /* Penting untuk grid agar setiap item mengisi penuh */
+}
+
+/* Warna saat Gejala Dipilih */
+.symptom-card.selected {
+    background-color: #e6ffe6; /* Warna hijau muda untuk penanda */
+    border-color: #4CAF50; /* Border hijau */
+    font-weight: bold;
+}
+
+/* Efek Hover (Opsional) */
+.symptom-card:hover:not(.selected) {
+    background-color: #f7f7f7; /* Abu-abu sangat tipis saat di-hover */
+}
+
+/* ------------------------------------------- */
+/* B. Styling untuk Grid (Symptom Grid) */
+/* ------------------------------------------- */
+#symptoms-grid {
+    /* MENGATUR TAMPILAN GRID AGAR RATA */
+    display: grid;
+    /* Membuat 3 kolom dengan lebar yang sama */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; /* Jarak antar kotak */
+    padding: 20px;
+    background-color: #f9f9f9; /* Opsional: Latar belakang area grid */
+    border-radius: 10px;
+}
+
+.symptoms-code {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Selected Symptoms */
+.selected-symptoms {
+    background: #f5fff5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-secondary);
+}
+
+.selected-symptoms h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+}
+
+.selected-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selected-item {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-primary);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.remove-symptom {
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.diagnose-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.diagnose-btn:hover:not(:disabled) {
+    background-color: var(--color-secondary);
+}
+
+.diagnose-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* ==================================== */
+/* 5. DIAGNOSIS RESULTS                 */
+/* ==================================== */
+.results-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.result-card {
+    background: var(--color-card-bg);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.disease-info h4 {
+    margin-top: 0;
+    color: var(--color-primary);
+}
+
+.confidence-badge {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    color: white;
+    min-width: 100px;
+    text-align: center;
+}
+
+.confidence-high { background-color: var(--color-success); } /* Hijau */
+.confidence-medium { background-color: #f39c12; } /* Oranye */
+.confidence-low { background-color: var(--color-danger); } /* Merah */
+
+.danger-level {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.danger-badge {
+    background: #f7f7f7;
+    color: var(--color-danger);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.matched-symptoms {
+    margin-bottom: 20px;
+}
+
+.symptom-tag {
+    display: inline-block;
+    background: #f0f0ff;
+    color: #444;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px 5px 0 0;
+    font-size: 0.9em;
+}
+
+.solutions-section {
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+}
+
+.solution-item {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-left: 3px solid var(--color-secondary);
+    border-radius: 4px;
+}
+
+.solution-name {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+/* ==================================== */
+/* 6. BACKWARD TAB (Analisis)           */
+/* ==================================== */
+.disease-selection {
+    margin-bottom: 30px;
+}
+
+.disease-select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background: white;
+}
+
+.backward-results {
+    border: 1px solid #ccc;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.required-symptoms {
+    margin-top: 20px;
+}
+
+.symptoms-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.symptoms-item {
+    background: #eef;
+    padding: 10px;
+    border-radius: 6px;
+    width: calc(50% - 5px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.symptoms-item-code {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.solutions {
+    margin-top: 30px;
+}
+
+/* ==================================== */
+/* 7. ABOUT TAB                         */
+/* ==================================== */
+.about-container {
+    padding: 0 20px;
+}
+
+.about-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #e0f8e0;
+}
+
+.about-section h3 {
+    color: var(--color-secondary);
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.tujuan-section {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    background: #e0f8e0;
+}
+
+.tujuan-img img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.tujuan-text {
+    flex-grow: 1;
+}
+
+.method-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.method-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ==================================== */
+/* 8. POPUP GEJALA (Fix utama)          */
+/* ==================================== */
+.gejala-popup {
+    /* Perbaikan: Dibuat agar selalu berada di atas layar dan ditengah */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Background lebih gelap agar fokus */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000; /* Z-index tertinggi */
+    /* Saat JavaScript menghapus kelas 'hidden', ini yang akan tampil */
+}
+
+.popup-content {
+    background: var(--color-card-bg);
+    padding: 30px 20px 20px 20px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.popup-img {
+    max-width: 100%;
+    max-height: 50vh; /* Batasi tinggi gambar */
+    height: auto;
+    border-radius: 8px;
+    margin-top: 15px;
+    object-fit: contain;
+}
+
+#gejala-desc {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #888;
+    background: none;
+    border: none;
+    line-height: 1;
+}
+
+/* ==================================== */
+/* 9. LOADING OVERLAY                   */
+/* ==================================== */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: var(--color-primary);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==================================== */
+/* 10. MEDIA QUERIES (Responsiveness)   */
+/* ==================================== */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        padding: 10px 20px;
+    }
+    .nav {
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .diagnosis-container, .backward-container, .about-container {
+        padding: 0 10px;
+    }
+    .symptoms-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .method-grid {
+        grid-template-columns: 1fr;
+    }
+    .symptom-item {
+        width: 100%;
+    }
+    .tujuan-section {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Tombol hamburger (default: hidden) */
+.hamburger {
+    display: none;
+    font-size: 26px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: auto;   /* 🔥 dorong hamburger ke kanan */
+    padding-right: 10px; /* opsional, biar ada jarak dari tepi */
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Muncul saat layar kecil */
+    }
+    .nav {
+        display: none; /* Sembunyikan menu dulu */
+        flex-direction: column;
+        gap: 10px;
+        background: var(--color-primary);
+        position: absolute;
+        top: 60px; /* di bawah header */
+        right: 10px;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .nav.show {
+        display: flex; /* Tampilkan kalau ada class show */
+    }
+    .nav-btn {
+        color: white;
+        background: transparent;
+    }
+    .nav-btn.active {
+        background: white;
+        color: var(--color-primary);
+    }
+}
